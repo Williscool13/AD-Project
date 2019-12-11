@@ -42,7 +42,10 @@ class Question:
     def __init__(self, question, options, answer):
         #Individual Questions as a class
         #question is a string, options is a tuple, answer is a string
-        pass
+
+
+
+      pass
 
 
 

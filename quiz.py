@@ -48,25 +48,27 @@ class Question:
       pass
 
 
-
+import pymysql
 def main():
-    connection = mysql.connector.connect(host=host,
-                                     database=database,
-                                     user=user,
-                                     password=password)
+    host = 'addatabase.chexbadcv1tk.ap-southeast-1.rds.amazonaws.com'
+    database = 'main'
+    user = 'admin'
+    password = '1234567890'
+    port = 3306
 
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select database();")
-        record = cursor.fetchone()
-        print("You're connected to database: ", record)
-    else:
-        print('connection unsuccessful')
-        exit()
+    connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
 
-    game = Quiz(cursor)
+
+
+    cursor = connection.cursor()
+    command = 'show tables'
+
+    cursor.execute(command)
+    print('Printing all table names: \n', cursor.fetchone())
+
+
+
+    #game = Quiz(cursor)
     print('program finished')
 
 

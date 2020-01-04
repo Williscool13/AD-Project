@@ -1,15 +1,18 @@
 from tkinter import *
-import mysql.connector
+import pymysql
 
 class Quiz:
-    def __init__(self, cursor):
+    def __init__(self, cursor, module_name):
         #open the interface and display an introduction message
         #a quiz is an object, that is made up of multiple Question objects
-        self.cursor = cursor
-        root = Tk()
-        quiz = self.interface(root)
+        self.questions = self.database_retrieval(module_name, cursor)
 
-        root.mainloop()
+
+
+
+        #root = Tk()
+        #quiz = self.interface(root)
+        #root.mainloop()
 
 
     def interface(self, root):
@@ -26,50 +29,75 @@ class Quiz:
         self.button.grid(row=1,column=0)
 
 
-    def database_retrieval(self, module, cursor):
+    def ask_all(self):
+        for index, question in enumerate(self.questions):
+            print('Question ' + str(index))
+            user_answer = input(question.ask() + '\n')
+            if question.check(user_answer) == True:
+                print('question correct!')
+            else:
+                print('question incorrect.')
+
+
+    def database_retrieval(self, module_name, cursor):
         #this is where the program will retrieve all the information from the database
         #when a module is selected, download questions and format correctly
 
-        query = 'select * from questions where module=' + str(module)
+        query = 'select * from ' + module_name
         cursor.execute(query)
         records = cursor.fetchall()
+        print('retrieving records')
+        print(records)
         questions = []
         for row in records:
-            question = Question(row[0], row[1], row[2])
+            print('debug: processing record' + str(row[0]))
+            question = Question(row[1], row[2], row[3])
             questions.append(question)
+        return questions
 
 class Question:
     def __init__(self, question, options, answer):
         #Individual Questions as a class
         #question is a string, options is a tuple, answer is a string
+        self.question = question
+        self.options = options.split('|')
+        self.answer = answer
+
+    def check(self, user_answer):
+        if user_answer == self.answer:
+            return True
+        else:
+            return False
+
+    def ask(self):
+        return self.question
 
 
 
-      pass
 
-
-import pymysql
 def main():
+
+    #database connection step, can make a module for it
     host = 'addatabase.chexbadcv1tk.ap-southeast-1.rds.amazonaws.com'
     database = 'main'
     user = 'admin'
     password = '1234567890'
     port = 3306
-
     connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
-
-
-
     cursor = connection.cursor()
+
+    '''
     command = 'show tables'
 
     cursor.execute(command)
     print('Printing all table names: \n', cursor.fetchone())
+    '''
+
+    quiz = Quiz(cursor, 'math')
+    quiz.ask_all()
 
 
-
-    #game = Quiz(cursor)
-    print('program finished')
+    print('program finished debug')
 
 
 

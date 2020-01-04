@@ -3,13 +3,17 @@ import pymysql
 
 class Quiz:
     def __init__(self, cursor, module_name):
-        #open the interface and display an introduction message
-        #a quiz is an object, that is made up of multiple Question objects
+        #Initializes quiz attributes
         self.correct_answers = 0
+
+        #questions contains ALL questions in a list. This list contains multiple question objects
         self.questions = self.database_retrieval(module_name, cursor)
+
         self.no_of_questions = len(self.questions)
 
     def ask_all(self):
+        #ask all questions in terminal
+        #@AUNG - in the final version, this will be done in the GUI, so this module will be removed in a future release
         for index, question in enumerate(self.questions):
             print('Question ' + str(index))
             user_answer = input(question.ask() + '\n')
@@ -21,8 +25,8 @@ class Quiz:
 
 
     def database_retrieval(self, module_name, cursor):
-        #retrieves questions from database
-        #output is a list of Question objects
+        # retrieves questions from database
+        # output is a list of Question objects
         query = 'select * from ' + module_name
         cursor.execute(query)
         records = cursor.fetchall()
@@ -65,10 +69,13 @@ class Question(object):
         self.answer = answer
 
     def check(self, user_answer):
+        #check if user answer matches real answer
+        #output boolean
         if user_answer == self.answer:
             return True
         else:
             return False
+
 
     def ask(self):
         return self.question + '\n' + self.list_options()

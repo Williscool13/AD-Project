@@ -5,44 +5,24 @@ class Quiz:
     def __init__(self, cursor, module_name):
         #open the interface and display an introduction message
         #a quiz is an object, that is made up of multiple Question objects
+        self.correct_answers = 0
         self.questions = self.database_retrieval(module_name, cursor)
-
-
-
-
-        #root = Tk()
-        #quiz = self.interface(root)
-        #root.mainloop()
-
-
-    def interface(self, root):
-        frame = Frame(root)
-        frame.grid(row=0,column=0)
-
-        self.intro = Label(frame, text='Welcome to Quiz Master 5000! Please select a module below')
-        self.intro.grid(row=0,column=0)
-
-
-
-
-        self.button = Button(frame, text='Quit', fg='red', command=frame.quit, height=4, width=20)
-        self.button.grid(row=1,column=0)
-
+        self.no_of_questions = len(self.questions)
 
     def ask_all(self):
         for index, question in enumerate(self.questions):
             print('Question ' + str(index))
             user_answer = input(question.ask() + '\n')
             if question.check(user_answer) == True:
+                self.correct_answers += 1
                 print('question correct!')
             else:
                 print('question incorrect.')
 
 
     def database_retrieval(self, module_name, cursor):
-        #this is where the program will retrieve all the information from the database
-        #when a module is selected, download questions and format correctly
-
+        #retrieves questions from database
+        #output is a list of Question objects
         query = 'select * from ' + module_name
         cursor.execute(query)
         records = cursor.fetchall()
@@ -55,12 +35,33 @@ class Quiz:
             questions.append(question)
         return questions
 
-class Question:
+    def final_tally(self):
+        print('You got {} out of {} questions correct!'.format(self.correct_answers, self.no_of_questions))
+
+
+    #unused modules
+    """
+        #root = Tk()
+        #quiz = self.interface(root)
+        #root.mainloop()
+    def interface(self, root):
+        frame = Frame(root)
+        frame.grid(row=0,column=0)
+        self.intro = Label(frame, text='Welcome to Quiz Master 5000! Please select a module below')
+        self.intro.grid(row=0,column=0)
+        self.button = Button(frame, text='Quit', fg='red', command=frame.quit, height=4, width=20)
+        self.button.grid(row=1,column=0)
+    """
+
+
+class Question(object):
     def __init__(self, question, options, answer):
-        #Individual Questions as a class
-        #question is a string, options is a tuple, answer is a string
+        #Individual questions, made up of 3 parts: question, options answer
+        #question is a string
         self.question = question
+        #options are in a list
         self.options = options.split('|')
+        #answer is a string
         self.answer = answer
 
     def check(self, user_answer):
@@ -70,9 +71,10 @@ class Question:
             return False
 
     def ask(self):
-        return self.question
+        return self.question + '\n' + self.list_options()
 
-
+    def list_options(self):
+        return 'The options are: ' + ', '.join(self.options)
 
 
 def main():
@@ -86,16 +88,9 @@ def main():
     connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
     cursor = connection.cursor()
 
-    '''
-    command = 'show tables'
-
-    cursor.execute(command)
-    print('Printing all table names: \n', cursor.fetchone())
-    '''
-
     quiz = Quiz(cursor, 'math')
     quiz.ask_all()
-
+    quiz.final_tally()
 
     print('program finished debug')
 

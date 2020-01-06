@@ -87,15 +87,15 @@ class Question(object):
 def main():
 
     #database connection step, can make a module for it
-    host = 'addatabase.chexbadcv1tk.ap-southeast-1.rds.amazonaws.com'
-    database = 'main'
+    host = 'ad-database.chexbadcv1tk.ap-southeast-1.rds.amazonaws.com'
+    database = 'adproject'
     user = 'admin'
     password = '1234567890'
     port = 3306
     connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
     cursor = connection.cursor()
 
-    quiz = Quiz(cursor, 'math')
+    quiz = Quiz(cursor, 'quiz')
     quiz.ask_all()
     quiz.final_tally()
 

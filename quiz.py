@@ -5,17 +5,16 @@ class Quiz:
     def __init__(self, cursor, module_name):
         #Initializes quiz attributes
         self.correct_answers = 0
-
         #questions contains ALL questions in a list. This list contains multiple question objects
         self.questions = self.database_retrieval(module_name, cursor)
-
         self.no_of_questions = len(self.questions)
 
     def ask_all(self):
         #ask all questions in terminal
         #@AUNG - in the final version, this will be done in the GUI, so this module will be removed in a future release
         for index, question in enumerate(self.questions):
-            print('Question ' + str(index))
+            print('=' * 20)
+            print('Question ' + str(index + 1))
             user_answer = input(question.ask() + '\n')
             if question.check(user_answer) == True:
                 self.correct_answers += 1
@@ -30,11 +29,10 @@ class Quiz:
         query = 'select * from ' + module_name
         cursor.execute(query)
         records = cursor.fetchall()
-        print('retrieving records')
-        print(records)
+        print('==DEBUG==','Retrieving Records', records, '==/DEBUG==', sep='\n')
         questions = []
         for row in records:
-            print('debug: processing record' + str(row[0]))
+            print('==DEBUG==','Processing Record ' + str(row[0]), '==DEBUG==')
             question = Question(row[1], row[2], row[3])
             questions.append(question)
         return questions
@@ -78,10 +76,14 @@ class Question(object):
 
 
     def ask(self):
-        return self.question + '\n' + self.list_options()
+        question = self.question + '\n'
+        sep = '-' * 20
+        options = '\nOptions:\n' + self.list_options()
+        return question + sep + options
+    #self.question + '\n' + self.list_options()
 
     def list_options(self):
-        return 'The options are: ' + ', '.join(self.options)
+        return ', '.join(self.options)
 
 
 def main():
@@ -95,11 +97,15 @@ def main():
     connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
     cursor = connection.cursor()
 
+
+    print('Welcome to Quiz Master 5000')
+    print('=' * 30)
+
     quiz = Quiz(cursor, 'quiz')
     quiz.ask_all()
     quiz.final_tally()
 
-    print('program finished debug')
+    print('==DEBUG== Program Finished ==DEBUG==')
 
 
 

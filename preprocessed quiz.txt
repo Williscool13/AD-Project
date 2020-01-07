@@ -1,0 +1,305 @@
+Software Quality and Process Management
+What is technology will be used for project?
+Kanban
+Kanban board
+Gantt chart
+Bar chart
+Answer: Kanban
+In CMMI standard, which level is processes characterized for project and is often reactive?
+Initial 
+Managed
+Defined
+Quantitatively Managed
+Answer: Managed
+Which methodology is the most traditional software development method?
+Waterfall methodology
+Scrum methodology
+Agile methodology
+RUP methodology
+Answer: Waterfall methodology
+Which methodology is applicable to any project with aggressive deadline, complex requirements and a degree of uniqueness?
+Waterfall methodology
+Scrum methodology
+Agile methodology
+Rup methodology
+Answer: Scrum methodology
+In the Artefact, which set is for the vision document?
+Management Set
+Requirement Set
+Design Set
+Implementation Set
+Answer: Requirement Set
+Which development process that relies on the repetition of a very short development cycle, requirements are turned into very specific test case, then the software is improved to pass the new tests?
+Agile methodology
+Behavior-driven development and business process management 
+Lightweight methodology
+Test Driven Development
+Answer: Test Driven Development
+When I think this software is simple and suitable for everyone to use, what kind of attribute can explain it?
+Efficiency
+Install ability
+Reliability
+Usability
+Answer: Usability
+Why we need to use ISO?
+Protect company
+Protect consumer
+Reduce efficiency
+Improve salary
+Answer: Protect consumer
+Why is the IT project fail?
+Not enough money from the company
+Bad employee relations
+Bad market environment
+ALL
+Answer: ALL
+Which tools is let the process of breaking down project deliverables into smaller, more manageable components?
+Gantt chart
+Kanban board
+WBS
+Bar chart
+Answer: WBS
+Software Engineering
+In the bloom taxonomy, when I want to use the knowledge contact with different knowledge, this is which step?
+Evaluate
+Apply
+Analyze
+Remember
+Answer: Analyse
+In the bloom taxonomy, the evaluate step is what mean?
+Create new originality
+Remember the normal concept
+Can use the knowledge to the new place
+Synthesis involves building a structure or pattern from diverse elements
+Answer: Synthesis involves building a structure or pattern from diverse elements
+In the Grasp, what is the pattern between payment system and case?
+High cohesion
+Low compiling
+Creator
+Poly morphism
+Answer: Creator
+In the Grasp, two more things will be compiling, which pattern can let them no compiling?
+Controller
+Creator
+Indirection
+High cohesion
+Answer: Indirection 
+In the Grasp, which pattern can save the information?
+Controller
+Information expects
+Poly morphism
+Creator
+Answer: Information expects
+In the Grasp, which pattern can let the things can keep low compiling and high cohesion?
+Poly morphism
+Indirection
+Creator
+Controller
+Answer: Poly morphism
+When we need to quickly release software, which methodology we need to choose?
+Rad methodology
+Silk methodology
+Scrum methodology
+V methodology
+Answer: Rad methodology
+In the scrum, who define what the product releases?
+Scrum master
+Product owner
+Development team
+No one
+Answer: Scrum master
+Which diagram shows the relationship between the user and the different use cases in which the use is involved?
+Class diagram
+Use case diagram
+Gantt chart
+Bar chart
+Answer: Use case diagram
+When we want to decryption the fie, what state do we need to turn the data into?
+Origin
+Encryption
+Read-only
+Hide
+Answer: Origin
+Operation System, security and networks
+What connects software and hardware?
+database
+operation system
+kernel
+code
+Answer: operation system
+What is the core of the operation system?
+UNIX Commands and Libraries
+System Call Interface
+Kernel
+User-written Application
+Answer: Kernel
+What does operation system do?
+Where is the mouse at the moment?
+Need to display something
+Give the order
+All
+Answer: All
+What is the simplest computer need?
+CPU and RAM
+CPU and hard disk
+Hard disk and RAM
+Mouse and keyboard
+Answer: CPU and RAM
+What is CPUs work?
+The PC incremented and the cycle begins again.
+The PC incremented and the cycle ends.
+The PC Infinite loop
+Restart all hardware
+Answer: The PC incremented and the cycle begins again.
+What number instructions the CPU can know?
+Bytecode
+Assembly
+High-level languages
+No one
+Answer: Bytecode
+What is the status of process?
+Running
+Not running
+All
+No one
+Answer: All
+In the memory allocation methods, which fit has best memory utilization?
+First-fit
+Best-fit
+Worst-fit
+No one
+Answer: Best-fit
+Which file system does windows belong to?
+FAT
+Ext2fs
+NTFS
+The other
+Answer: FAT
+What happens in a kernel mode crash?
+Restart the PC
+Halt the entire PC
+Enter safe mode
+Nothing happens
+Answer: Halt the entire PC
+Database and Information Retrieval
+What is the view of system?
+Data view/perspective
+Function view/perspective
+Event view/perspective
+All
+Answer: ALL
+A relational database consists of a collection of
+Tables
+Fields
+Records
+Keys
+Answer: Tables
+Which one of the following is used to define the structure of the relation, deleting relations and relating schemas?
+DML (Data Manipulation Language)
+DDL (Data Definition Language)
+Query
+Relational Schema
+Answer: DDL (Data Definition Language)
+Which one of the following provides the ability to query information from the database and to insert tuples into, delete tuples from, and modify tuples in the database?
+DML (Data Manipulation Language)
+DDL (Data Definition Language)
+Query
+Relational Schema
+Answer: DML (Data Manipulation Language)
+If we want to delete something from the table, which command we use
+Delete
+Purge
+Remove
+Drop table
+Answer: Drop table
+When we use this code, DELETE FROM W; what this command executes?
+Remove relation
+Clear relation entries
+Delete fields
+Delete rows
+Answer: Clear relation entries
+The user can use which language to request information from a database?
+Query
+Relational
+Structural
+Compiler
+Answer: Query
+Student (ID, NUMBER, NAME, GENDER), which one is the primary key?
+ID
+NUMBER
+NAME
+GENDER
+Answer: ID
+Which one is a procedural language?
+Domain relational calculus
+Tuple relational calculus
+Relational algebra
+Query language
+Answer: Relational algebra
+Which sorting algorithm is stability algorithm?
+Bubble sort
+Shell sort
+Quick sort
+Selection sort
+Answer: Bubble sort
+Technology and Social, Legal and Ethical Context
+What is Data Protection?
+Data protection concerns keeping information about you confidential as well as correct
+Helps prevent your information getting to the wrong people
+Help prevent things happening as a result wrong data or wrong data process.
+All
+Answer: All
+What the Data Protection Act for?
+Intended to balance interests of data subjects with data controllers
+Freedom to process data versus privacy of individual
+Fair, lawful data processing
+All
+Answer: All
+Who does the Freedom of Information Act cover?
+Public authorities
+Individual
+Private authorities
+Everyone
+Answer: Public authorities
+What are the requests of Freedom of Information Act?
+Must be in writing
+Must include name and address of applicant
+No restrictions on the age, nationality or where an applicant lives
+All
+Answer: All
+What is the public interest?
+ Promoting public debate of issues of the day
+Improve efficiency
+Promote social harmony
+Improve economy
+Answer: Promoting public debate of issues of the day
+Which one is Unauthorized access offence?
+She/he causes a computer to perform any function with intent to secure access to any program or data held in any computer
+The access he/she intends is unauthorized
+She/he knows at the time that this is the case
+All
+Answer: All
+Which case is a crime?
+Publishing an obscene article
+Sending email to cause alarm
+Cyberstalking
+All
+Answer: All
+What is the Issacs Asimov’s laws for the robot?
+A robot may not injure a human	being or, through inaction, allow a human being to come to harm.
+A robot can harm human.
+A robot only accepts orders from designers.
+All
+Answer: All
+Under what circumstances computer forensics is important, the evidence is unacceptable?
+That the evidence has not been modified
+That where it came from is fully documented
+That an expert can explain how the evidence was obtained and preserved
+That the evidence has been modified
+Answer: That the evidence has been modified
+Which one is the provision of RIPA?
+The interception of communications
+The acquisition and disclosure of data relating to communications
+The carrying out of surveillance
+All
+Answer: All

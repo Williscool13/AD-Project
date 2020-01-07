@@ -1,4 +1,4 @@
-Software Quality and Process Management
+Software_Quality_and_Process_Management
 What is technology will be used for project?
 Kanban
 Kanban board
@@ -59,7 +59,7 @@ Kanban board
 WBS
 Bar chart
 Answer: WBS
-Software Engineering
+Software_Engineering
 In the bloom taxonomy, when I want to use the knowledge contact with different knowledge, this is which step?
 Evaluate
 Apply
@@ -120,7 +120,7 @@ Encryption
 Read-only
 Hide
 Answer: Origin
-Operation System, security and networks
+Operating_System_security_and_networks
 What connects software and hardware?
 database
 operation system
@@ -181,7 +181,7 @@ Halt the entire PC
 Enter safe mode
 Nothing happens
 Answer: Halt the entire PC
-Database and Information Retrieval
+Database_and_Information_Retrieval
 What is the view of system?
 Data view/perspective
 Function view/perspective
@@ -242,7 +242,7 @@ Shell sort
 Quick sort
 Selection sort
 Answer: Bubble sort
-Technology and Social, Legal and Ethical Context
+Technology_and_Social_Legal_and_Ethical_Context
 What is Data Protection?
 Data protection concerns keeping information about you confidential as well as correct
 Helps prevent your information getting to the wrong people

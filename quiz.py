@@ -13,9 +13,13 @@ class Quiz:
         #ask all questions in terminal
         #@AUNG - in the final version, this will be done in the GUI, so this module will be removed in a future release
         for index, question in enumerate(self.questions):
-            print('=' * 20)
+            print('=' * 50)
             print('Question ' + str(index + 1))
-            user_answer = input(question.ask() + '\n')
+            print(question.ask())
+            print('CORRECT ANSWER IS:', question.get_answer())
+            user_answer = input().upper()
+            while user_answer not in ['A','B','C','D']:
+                user_answer = input('Please input A,B,C, or D: ').upper()
             if question.check(user_answer) == True:
                 self.correct_answers += 1
                 print('question correct!')
@@ -61,15 +65,16 @@ class Question(object):
         #Individual questions, made up of 3 parts: question, options answer
         #question is a string
         self.question = question
-        #options are in a list
-        self.options = options.split('|')
+        #options are in a dictionary
+        temp = [x.strip() for x in options.split('|')]
+        self.options = dict(zip(['A','B','C','D'], temp))
         #answer is a string
         self.answer = answer
-
+        
     def check(self, user_answer):
         #check if user answer matches real answer
         #output boolean
-        if user_answer == self.answer:
+        if self.options[user_answer] == self.answer:
             return True
         else:
             return False
@@ -77,13 +82,16 @@ class Question(object):
 
     def ask(self):
         question = self.question + '\n'
-        sep = '-' * 20
-        options = '\nOptions:\n' + self.list_options()
+        sep = '-' * 50
+        options = '\nOptions:\n' + '\n'.join(['{}: {}'.format(key, value) for key, value in list(self.options.items())])
         return question + sep + options
     #self.question + '\n' + self.list_options()
 
     def list_options(self):
         return ', '.join(self.options)
+
+    def get_answer(self):
+        return self.answer
 
 
 def main():
@@ -101,7 +109,7 @@ def main():
     print('Welcome to Quiz Master 5000')
     print('=' * 30)
 
-    quiz = Quiz(cursor, 'quiz')
+    quiz = Quiz(cursor, 'Technology_and_Social_Legal_and_Ethical_Context')
     quiz.ask_all()
     quiz.final_tally()
 

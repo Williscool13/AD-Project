@@ -40,6 +40,21 @@ for i in range(int(no_of_modules)):
     print(all_options[i])
     print(all_answers[i])
 
+import pymysql
+host = 'ad-database.chexbadcv1tk.ap-southeast-1.rds.amazonaws.com'
+database = 'adproject'
+user = 'admin'
+password = '1234567890'
+port = 3306
+connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
+cursor = connection.cursor()
+
+for i in range(int(no_of_modules)):
+    cursor.execute("create table {}({} int(64) not null auto_increment primary key, question varchar(256), options varchar(512), answer varchar(128))".format(all_modules[i], all_modules[i] + '_id'))
+    for j in range(len(all_questions[i])):
+        cursor.execute("insert into {} values('', '{}', '{}', '{}')".format(all_modules[i], all_questions[i][j], '|'.join(all_options[i][j]), all_answers[i][j]))
+    
+                       
 
 
 

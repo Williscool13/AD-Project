@@ -2,12 +2,16 @@ from tkinter import *
 import pymysql
 
 class Quiz:
-    def __init__(self, cursor, module_name):
+    def __init__(self, cursor, module_name, username):
         #Initializes quiz attributes
         self.correct_answers = 0
         #questions contains ALL questions in a list. This list contains multiple question objects
-        self.questions = self.database_retrieval(module_name, cursor)
+        self.cursor = cursor
+        self.questions = self.database_retrieval(module_name)
         self.no_of_questions = len(self.questions)
+        self.correct = []
+        self.username = username
+        self.module_name = module_name
 
     def ask_all(self):
         #ask all questions in terminal
@@ -16,23 +20,24 @@ class Quiz:
             print('=' * 50)
             print('Question ' + str(index + 1))
             print(question.ask())
-            print('CORRECT ANSWER IS:', question.get_answer())
             user_answer = input().upper()
             while user_answer not in ['A','B','C','D']:
                 user_answer = input('Please input A,B,C, or D: ').upper()
             if question.check(user_answer) == True:
                 self.correct_answers += 1
-                print('question correct!')
+                print('Answer  Correct!\nYou Gain 1/1 Points')
+                self.correct.append(question)
             else:
-                print('question incorrect.')
+                print('Answer Incorrect.\nYou Gain 0/1 Points')
+            print('CORRECT ANSWER IS:', question.get_answer())
 
 
-    def database_retrieval(self, module_name, cursor):
+    def database_retrieval(self, module_name):
         # retrieves questions from database
         # output is a list of Question objects
         query = 'select * from ' + module_name
-        cursor.execute(query)
-        records = cursor.fetchall()
+        self.cursor.execute(query)
+        records = self.cursor.fetchall()
         print('==DEBUG==','Retrieving Records', records, '==/DEBUG==', sep='\n')
         questions = []
         for row in records:
@@ -41,10 +46,42 @@ class Quiz:
             questions.append(question)
         return questions
 
-    def final_tally(self):
+    def final_print(self):
+        print('=' * 100)
         print('You got {} out of {} questions correct!'.format(self.correct_answers, self.no_of_questions))
+        print('Total Points: {}/{}'.format(self.correct_answers, self.no_of_questions))
+        if not self.correct:
+            print("You didn't get answer any questions correctly, boohoo")
+        else:
+            print('You answered the following questions correctly:')
+            print('=' * 20)
+            for question in self.correct:
+                question.to_string()
+                print('-' * 20)
 
 
+    def update_database(self):
+        self.cursor.execute("insert into scores values('','{}','{}','{}')".format(self.username, self.module_name, self.correct_answers))
+
+    def last_three(self):
+        self.cursor.execute("select * from scores where username='{}'".format(self.username))
+        scores = self.cursor.fetchall()
+        top_three = big_three(scores, 3)
+        print(top_three)
+
+
+import numpy as np
+def big_three(arr, N):
+    if len(arr) <= N:
+        return arr
+    else:
+        scores = [[0,'','', 0], [0,'','', 0], [0,'','', 0]]
+        idx_min = np.argmin([x[3] for x in scores])
+        for i in arr:
+            if i[3] >= scores[idx_min][3]:
+                scores[idx_min] = i
+                idx_min = np.argmin([x[3] for x in scores])                    
+    return scores
     #unused modules
     """
         #root = Tk()
@@ -93,6 +130,12 @@ class Question(object):
     def get_answer(self):
         return self.answer
 
+    def to_string(self):
+        print('Question:', self.question)
+        print('Options:\n' + '\n'.join(['{}: {}'.format(key, value) for key, value in list(self.options.items())]))
+        print('Answer:', self.answer)
+        
+
 
 def main():
 
@@ -109,13 +152,16 @@ def main():
     print('Welcome to Quiz Master 5000')
     print('=' * 30)
 
-    quiz = Quiz(cursor, 'Technology_and_Social_Legal_and_Ethical_Context')
+    username = input('What is your username? ').lower()
+    
+    quiz = Quiz(cursor, 'Technology_and_Social_Legal_and_Ethical_Context', username)
     quiz.ask_all()
-    quiz.final_tally()
-
+    quiz.final_print()
+    quiz.update_database()
+    quiz.last_three()
     print('==DEBUG== Program Finished ==DEBUG==')
 
-
+    connection.commit()
 
 
 

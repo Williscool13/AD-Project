@@ -1,5 +1,8 @@
 from tkinter import *
 import pymysql
+from datetime import date
+import numpy as np
+
 
 class Quiz:
     def __init__(self, cursor, module_name, username):
@@ -60,30 +63,50 @@ class Quiz:
                 print('-' * 20)
 
 
+    
     def update_database(self):
         print('DEBUG: begin update database')
-        self.cursor.execute("insert into scores values('','{}','{}','{}')".format(self.username, self.module_name, self.correct_answers))
+        today = date.today()
+        self.cursor.execute("insert into scores values('','{}','{}','{}','{}')".format(today, self.username, self.module_name, self.correct_answers))
         print('DEBUG: end update database')
 
     def last_three(self):
         self.cursor.execute("select * from scores where username='{}' and module_name='{}'".format(self.username, self.module_name))
         scores = self.cursor.fetchall()
         top_three = big_three(scores, 3)
-        print(top_three)
+        top_three = insertion_sort(top_three)
+        for row in top_three:
+            print('Date: {} - Username: {} - Score: {}'.format(row[1], row[2], row[4]))
 
 
-import numpy as np
+
 def big_three(arr, N):
     if len(arr) <= N:
         return arr
     else:
-        scores = [[0,'','', 0], [0,'','', 0], [0,'','', 0]]
-        idx_min = np.argmin([x[3] for x in scores])
+        scores = [[0,'','','', 0], [0,'','','', 0], [0,'','','', 0]]
+        idx_min = np.argmin([x[4] for x in scores])
         for i in arr:
-            if i[3] >= scores[idx_min][3]:
+            if i[4] >= scores[idx_min][4]:
                 scores[idx_min] = i
-                idx_min = np.argmin([x[3] for x in scores])                    
+                idx_min = np.argmin([x[4] for x in scores])
+
     return scores
+
+def insertion_sort(arr): 
+    final_list = [list(x) for x in arr]
+
+    for i in range(1, len(arr)):
+        key = final_list[i]
+
+        j = i - 1
+        while j >= 0 and key[4] < arr[j][4]:
+            final_list[j + 1] = final_list[j]
+            j -= 1
+        final_list[j + 1] = key
+
+    return reversed(final_list)
+        
     #unused modules
     """
         #root = Tk()

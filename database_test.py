@@ -34,4 +34,4 @@ if __name__ == '__main__':
    
 
 
-#command = 'create table scores(scoreid int(50) not null auto_increment primary key, username varchar(100), module_name varchar(100), score int(2))'
+#command = 'create table scores(scoreid int(50) not null auto_increment primary key, date varchar(50), username varchar(100), module_name varchar(100), score int(2))'

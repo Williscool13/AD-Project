@@ -61,10 +61,12 @@ class Quiz:
 
 
     def update_database(self):
+        print('DEBUG: begin update database')
         self.cursor.execute("insert into scores values('','{}','{}','{}')".format(self.username, self.module_name, self.correct_answers))
+        print('DEBUG: end update database')
 
     def last_three(self):
-        self.cursor.execute("select * from scores where username='{}'".format(self.username))
+        self.cursor.execute("select * from scores where username='{}' and module_name='{}'".format(self.username, self.module_name))
         scores = self.cursor.fetchall()
         top_three = big_three(scores, 3)
         print(top_three)
@@ -140,13 +142,21 @@ def quiz_selection(module_dict):
     print('Available Modules:')
     for key, module in module_dict.items():
         print('{}: {}'.format(key, module))
-    user_choice = input('Please select a module')
+    user_choice = input('Please select a module: ').upper().strip()
     while user_choice not in module_dict.keys():
         user_choice = input('Please select from: ' + ', '.join(list(module_dict.keys())))
 
     return module_dict[user_choice]
 
 
+def continue_playing():
+    a = input('Would you like to retake the quiz? (Y/N): ').lower()
+    while a not in ['y','n']:
+        a = input('Please input (Y) or (N): ')
+    if a == 'y':
+        return True
+    else:
+        return False
 
 def main():
 
@@ -159,22 +169,23 @@ def main():
     connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
     cursor = connection.cursor()
 
-
     print('Welcome to Quiz Master 5000')
     print('=' * 30)
-
     username = input('What is your username? ').lower()
-
     module_dict = {'A':'DIR', 'B':'OSSN', 'C':'SE', 'D':'SQPM', 'E':'TSLEC'}
     module = quiz_selection(module_dict)
+    
+    play = True
+    while play:
+        quiz = Quiz(cursor, module, username)
+        quiz.ask_all()
+        quiz.final_print()
+        quiz.update_database()
+        #play the highscore only for that specific module
+        quiz.last_three()
 
-
-    quiz = Quiz(cursor, module, username)
-    quiz.ask_all()
-    quiz.final_print()
-    quiz.update_database()
-    #display the highscore only for that specific module
-    quiz.last_three()
+        play = continue_playing()
+        
     print('==DEBUG== Program Finished ==DEBUG==')
 
     connection.commit()

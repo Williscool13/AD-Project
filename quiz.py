@@ -136,6 +136,17 @@ class Question(object):
         print('Answer:', self.answer)
         
 
+def quiz_selection(module_dict):
+    print('Available Modules:')
+    for key, module in module_dict.items():
+        print('{}: {}'.format(key, module))
+    user_choice = input('Please select a module')
+    while user_choice not in module_dict.keys():
+        user_choice = input('Please select from: ' + ', '.join(list(module_dict.keys())))
+
+    return module_dict[user_choice]
+
+
 
 def main():
 
@@ -154,8 +165,11 @@ def main():
 
     username = input('What is your username? ').lower()
 
-    #'DIR', 'OSSN', 'SE', 'SQPM', 'TSLEC'
-    quiz = Quiz(cursor, 'SQPM', username)
+    module_dict = {'A':'DIR', 'B':'OSSN', 'C':'SE', 'D':'SQPM', 'E':'TSLEC'}
+    module = quiz_selection(module_dict)
+
+
+    quiz = Quiz(cursor, module, username)
     quiz.ask_all()
     quiz.final_print()
     quiz.update_database()

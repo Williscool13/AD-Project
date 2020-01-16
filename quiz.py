@@ -153,11 +153,13 @@ def main():
     print('=' * 30)
 
     username = input('What is your username? ').lower()
-    
-    quiz = Quiz(cursor, 'Technology_and_Social_Legal_and_Ethical_Context', username)
+
+    #'DIR', 'OSSN', 'SE', 'SQPM', 'TSLEC'
+    quiz = Quiz(cursor, 'SQPM', username)
     quiz.ask_all()
     quiz.final_print()
     quiz.update_database()
+    #display the highscore only for that specific module
     quiz.last_three()
     print('==DEBUG== Program Finished ==DEBUG==')
 

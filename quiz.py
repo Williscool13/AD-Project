@@ -181,8 +181,12 @@ def continue_playing():
     else:
         return False
 
-def main():
 
+import time
+import warnings
+
+def main():
+    warnings.filterwarnings("ignore")
     #database connection step, can make a module for it
     host = 'ad-database.chexbadcv1tk.ap-southeast-1.rds.amazonaws.com'
     database = 'adproject'
@@ -212,7 +216,7 @@ def main():
     print('==DEBUG== Program Finished ==DEBUG==')
 
     connection.commit()
-
+    time.sleep(20)
 
 
 

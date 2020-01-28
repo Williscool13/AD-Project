@@ -1,4 +1,5 @@
-from tkinter import *
+import tkinter as tk
+from tkinter import font as tkfont
 import pymysql
 from datetime import date
 import numpy as np
@@ -182,6 +183,138 @@ def continue_playing():
         return False
 
 
+
+class QuizMasterGUI(tk.Tk):
+
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+
+        self.title_font = tkfont.Font(family='Arial', size=18, weight="bold", slant="italic")
+
+        # the container is where we'll stack a bunch of frames
+        # on top of each other, then the one we want visible
+        # will be raised above the others
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        for F in (StartPage, PageOne, PageTwo, PageThree, PageFour, PageFive, PageSix):
+            page_name = F.__name__
+            frame = F(parent=container, controller=self)
+            self.frames[page_name] = frame
+
+            # put all of the pages in the same location;
+            # the one on the top of the stacking order
+            # will be the one that is visible.
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame("StartPage")
+
+    def show_frame(self, page_name):
+        '''Show a frame for the given page name'''
+        frame = self.frames[page_name]
+        frame.tkraise()
+
+
+class StartPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text ="Welcome to Quiz Master 5000", padx=10,pady=10)
+        label.pack()
+        myLabel2 = tk.Label (self,text = "What is your username?", padx = 10, pady =10)
+        myLabel2.pack()
+        e = tk.Entry(self)
+        e.pack()
+        def get_name():
+            myLabel3=tk.Label(self, text= e.get())
+            myLabel3.pack()
+        enter_Name = tk.Button(self, text="Next", command=lambda: controller.show_frame("PageOne"))
+        enter_Name.pack()
+
+
+class PageOne(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label= tk.Label(self, text ="Hello",padx=10, pady=10).pack(anchor="w")
+        label1 = tk.Label(self, text ="Available Modules:", padx=10,pady=10)
+        label1.pack(anchor="w")
+        r = tk.IntVar()
+
+
+        RB1 = tk.Radiobutton(self, text="DIR", variable=r, value = 1,command=lambda: controller.show_frame("PageTwo")).pack(anchor="w")
+        RB2 = tk.Radiobutton(self, text="OSSN", variable=r, value = 2,command=lambda: controller.show_frame("PageThree")).pack(anchor="w")
+        RB3 = tk.Radiobutton(self, text="SE", variable=r, value = 3,command=lambda: controller.show_frame("PageFour")).pack(anchor="w")
+        RB4 = tk.Radiobutton(self, text="SQPM", variable=r, value = 4,command=lambda: controller.show_frame("PageFive")).pack(anchor="w")
+        RB5 = tk.Radiobutton(self, text="TSLEC", variable=r, value = 5,command=lambda: controller.show_frame("PageSix")).pack(anchor="w")
+
+class PageTwo(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="This is page for DIR", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+
+class PageThree(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="This is page for OSSN", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+
+class PageFour(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="This is page for SE", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+
+class PageFive(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="This is page for SQPM", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+
+class PageSix(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="This is page for TSLEC", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+
+
+
+
+
+
+
+
 import time
 import warnings
 
@@ -195,6 +328,10 @@ def main():
     port = 3306
     connection = pymysql.connect(host=host, db=database, user=user, passwd=password, port=port)
     cursor = connection.cursor()
+
+    app = QuizMasterGUI()
+    app.mainloop()
+
 
     print('Welcome to Quiz Master 5000')
     print('=' * 30)

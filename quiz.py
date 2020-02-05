@@ -203,20 +203,26 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        tk.Label(self, text ="Welcome to Quiz Master 5000", padx=10,pady=10).pack()
-        tk.Label (self,text = "What is your username?", padx = 10, pady =10).pack()
-        e = tk.Entry(self)
+        self.configure(background='#B3C0C1')
+        tk.Label(self, text ="Welcome to Quiz Master 5000", padx=10,pady=10,font=('arial',20),fg="blue",bg="#B3C0C1").pack()
+        tk.Label (self,text = "Please enter your username", font=('arial',15),padx = 20, pady =20,bg="#B3C0C1").pack()
+        e = tk.Entry(self,bg="#B3C0C1")
         def next():
             username = e.get()
             if not username:
-                error_message = tk.Label(self, text='Invalid Username').pack()
+                error_message = tk.Label(self, text='Invalid Username',bg="#B3C0C1").pack()
                 return
             GLOBAL_USERNAME.append(username)
             controller.show_frame("PageOne")
-
-        tk.Button(self, text="Next", command=next).pack()
-
         e.pack()
+        tk.Label(self, text="            ",padx=10,pady=10,bg="#B3C0C1").pack()
+
+        tk.Button(self, text="Next", command=next,padx=5,pady=5).pack()
+
+        tk.Label(self, text="            ",padx=10,pady=10,bg="#B3C0C1").pack()
+
+
+
 
 
 class PageOne(tk.Frame):
@@ -224,9 +230,10 @@ class PageOne(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.configure(background='#B3C0C1')
         controller.title('Module Selection')
         #label= tk.Label(self, text ="Hello",padx=10, pady=10).pack(anchor="w")
-        label1 = tk.Label(self, text ="Available Modules:", padx=10,pady=10)
+        label1 = tk.Label(self, text ="Available Modules:", padx=10,pady=10,bg="#B3C0C1")
         label1.pack(anchor="w")
         modules = [("DIR", "PageTwo"), ("OSSN", "PageThree"), ("SE", "PageFour"), ("SQPM", "PageFive"), ("TSLEC", "PageSix")]
 
@@ -244,11 +251,11 @@ class PageOne(tk.Frame):
 
         for module, page in modules:
             #tk.Button(self, text=module, width=20, height=1, command=lambda: next(module, page)).pack(anchor='center')
-            tk.Radiobutton(self, text=module, padx=20, variable=v, value=module).pack(anchor='w')
+            tk.Radiobutton(self, text=module, bg="#B3C0C1", padx=20,pady=10,font=('arial',15), variable=v, value=module).pack(anchor='w')
 
 
-        tk.Button(self, text='select', command=next).pack(anchor='w')
-
+        tk.Button(self, text='select', command=next,padx=10,pady=10).pack()
+        tk.Label(self, text="   ",padx=10,pady=10,bg="#B3C0C1").pack()
 
 class QuizQuestions:
     def __init__(self, master, module):
@@ -302,6 +309,7 @@ class QuizQuestions:
 class QuizQuestion(tk.Frame):
     def __init__(self, parent, controller, index, question_object):
         tk.Frame.__init__(self, parent)
+        self.configure(background='#B3C0C1')
         self.index = index
         self.controller = controller
         self.parent = parent
@@ -310,30 +318,33 @@ class QuizQuestion(tk.Frame):
         self.options  = question_object.options
         self.answer   = question_object.answer
 
-        self.Q = tk.Label(self, text=question_object.question, font=('Calibri', 20))
-        self.A = tk.Button(self, text=question_object.options['A'], width=50, height=2, command=lambda: self.check('A'))
-        self.B = tk.Button(self, text=question_object.options['B'], width=50, height=2, command=lambda: self.check('B'))
-        self.C = tk.Button(self, text=question_object.options['C'], width=50, height=2, command=lambda: self.check('C'))
-        self.D = tk.Button(self, text=question_object.options['D'], width=50, height=2, command=lambda: self.check('D'))
+        self.Q = tk.Label(self, text=question_object.question, font=('Calibri', 20),bg="#B3C0C1",padx=10,pady=10)
+        self.A = tk.Button(self, text=question_object.options['A'], width=80, height=2, command=lambda: self.check('A'))
+        self.B = tk.Button(self, text=question_object.options['B'], width=80, height=2, command=lambda: self.check('B'))
+        self.C = tk.Button(self, text=question_object.options['C'], width=80, height=2, command=lambda: self.check('C'))
+        self.D = tk.Button(self, text=question_object.options['D'], width=80, height=2, command=lambda: self.check('D'))
 
         self.Q.pack()
         self.A.pack()
         self.B.pack()
         self.C.pack()
         self.D.pack()
+        tk.Label(self, text="   ",padx=10,pady=10,bg="#B3C0C1").pack()
 
 
     def check(self, option):
         if self.options[option] == self.answer:
             self.controller.correct += 1
-            tk.Button(self, text='Correct!', command=self.next, height=2, width=40).pack()
+            tk.Button(self, text='Correct!, Click to continue', command=self.next, height=2, width=40).pack()
+            tk.Label(self, text="   ",padx=10,pady=10,bg="#B3C0C1").pack()
         else:
-            tk.Button(self, text='Incorrect!', command=self.next, height=2, width=40).pack()
+            tk.Button(self, text='Incorrect!, Click to continue', command=self.next, height=2, width=40).pack()
+            tk.Label(self, text="   ",padx=10,pady=10,bg="#B3C0C1").pack()
         for value, option in zip(self.options.values(), [self.A, self.B, self.C, self.D]):
             if value == self.answer:
-                option.configure(bg='green', state='disabled')
+                option.configure(bg='#6EEC77', state='disabled')
             else:
-                option.configure(bg='red', state='disabled')
+                option.configure(bg='#EC6E6E', state='disabled')
 
     def next(self):
         if self.index == 9:
@@ -348,17 +359,22 @@ class QuizQuestion(tk.Frame):
 class FinalPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.configure(background='#B3C0C1')
         self.controller = controller
         self.update_database()
         r = 'You got ' + str(self.controller.correct) + ' out of 10 questions correct!'
-        tk.Label(self, text=r).pack(anchor='center')
-        tk.Button(self, text='Check Answers', command=self.run_through).pack()
-        tk.Button(self, text='High Scores', command=self.high_score).pack()
+        tk.Label(self, text=r,font=('arial',20),bg="#B3C0C1",padx=10,pady=10).pack(anchor='center')
+        tk.Label(self, text="            ",padx=10,pady=10,bg="#B3C0C1").pack()
+
+        tk.Button(self, text='Check Answers',padx=10,pady=10, command=self.run_through).pack()
+        tk.Label(self, text="            ",padx=5,pady=5,bg="#B3C0C1").pack()      
+        tk.Button(self, text='High Scores', command=self.high_score,padx=10,pady=10).pack()
+        tk.Label(self, text="            ",padx=5,pady=5,bg="#B3C0C1").pack()
         #high score update and show
 
 
-        tk.Button(self, text='Close Quiz', command=self.controller.master.destroy).pack()
-
+        tk.Button(self, text='Close Quiz', command=self.controller.master.destroy,padx=10,pady=10).pack()
+        tk.Label(self, text="            ",padx=5,pady=5,bg="#B3C0C1").pack()
     def run_through(self):
         self.controller.show_frame(0)
 
@@ -374,15 +390,17 @@ class FinalPage(tk.Frame):
     def high_score(self):
         master = tk.Tk()
         master.title('High Score')
+        master.configure(background='#B3C0C1')
         GLOBAL_CURSOR[0].execute("select * from scores where username='{}' and module_name='{}'".format(GLOBAL_USERNAME[0], GLOBAL_MODULE[0]))
         scores = GLOBAL_CURSOR[0].fetchall()
         top_three = big_three(scores, 3)
         top_three = insertion_sort(top_three)
         for row in top_three:
             s = 'Date: {} - Username: {} - Score: {}'.format(row[1], row[2], row[4])
-            tk.Label(master, text=s).pack()
-        tk.Button(master, text='Close', command=master.destroy).pack()
-
+            tk.Label(master, text=s,bg="#B3C0C1",padx=10,pady=10,font=(10)).pack()
+        tk.Label(master, text="            ",padx=5,pady=5,bg="#B3C0C1").pack()
+        tk.Button(master, text='Close', padx=7,pady=7,command=master.destroy).pack()
+        tk.Label(master, text="            ",padx=5,pady=5,bg="#B3C0C1").pack()
 
 def big_three(arr, N):
     if len(arr) <= N:
